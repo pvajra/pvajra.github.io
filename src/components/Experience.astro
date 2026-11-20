@@ -1,39 +1,60 @@
 ---
-import { experience } from '../data/profile';
+import { experience, type Role } from '../data/profile';
+
+// Group consecutive roles at the same company so promotions read as a progression.
+const groups: { company: string; location: string; roles: Role[] }[] = [];
+for (const role of experience) {
+  const last = groups[groups.length - 1];
+  if (last && last.company === role.company) last.roles.push(role);
+  else groups.push({ company: role.company, location: role.location, roles: [role] });
+}
+const span = (roles: Role[]) => `${roles[roles.length - 1].start} – ${roles[0].end}`;
 ---
 <section id="experience" class="section" aria-labelledby="experience-title">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">Experience</span>
-      <h2 id="experience-title" class="section-title">Where I’ve worked</h2>
-      <p class="lead">Select a role to see what I did there.</p>
+      <span class="eyebrow"><span class="num">02</span> Experience</span>
+      <h2 id="experience-title" class="section-title">Production Android, end to end</h2>
+      <p class="lead">From intern to owner of three production apps at TVS Electronics, then sole Android developer at an agri-fintech company.</p>
     </div>
 
-    <ol class="timeline">
-      {experience.map((role, i) => (
-        <li class="item">
-          <span class="dot" aria-hidden="true"></span>
-          <details class="card role" open={i === 0}>
-            <summary>
-              <div class="summary-main">
-                <h3>{role.title}</h3>
-                <p class="company">{role.company} · {role.location}</p>
-              </div>
-              <p class="dates"><time>{role.start}</time> – <time>{role.end}</time></p>
-              <span class="chev" aria-hidden="true"></span>
-            </summary>
-            <div class="body">
-              <p class="role-summary">{role.summary}</p>
-              <ul class="bullets">
-                {role.bullets.map((b) => <li>{b}</li>)}
-              </ul>
-              {role.tech && (
-                <ul class="chips chips--small" aria-label="Technologies">
-                  {role.tech.map((t) => <li class="chip">{t}</li>)}
-                </ul>
-              )}
+    <ol class="companies">
+      {groups.map((g) => (
+        <li class="company">
+          <div class="company-meta">
+            <span class="logo" aria-hidden="true">{g.company.charAt(0)}</span>
+            <div>
+              <h3>{g.company}</h3>
+              <p class="sub">{g.location}</p>
+              <p class="sub dates">{span(g.roles)}</p>
             </div>
-          </details>
+          </div>
+
+          <ol class="roles">
+            {g.roles.map((role, i) => (
+              <li class="role">
+                <span class="node" aria-hidden="true"></span>
+                <details open={i === 0}>
+                  <summary>
+                    <span class="role-title">{role.title}</span>
+                    <span class="role-dates"><time>{role.start}</time> – <time>{role.end}</time></span>
+                    <span class="chev" aria-hidden="true"></span>
+                  </summary>
+                  <div class="body">
+                    <p class="role-summary">{role.summary}</p>
+                    <ul class="bullets">
+                      {role.bullets.map((b) => <li>{b}</li>)}
+                    </ul>
+                    {role.tech && (
+                      <ul class="chips chips--small" aria-label="Technologies">
+                        {role.tech.map((t) => <li class="chip">{t}</li>)}
+                      </ul>
+                    )}
+                  </div>
+                </details>
+              </li>
+            ))}
+          </ol>
         </li>
       ))}
     </ol>
@@ -41,103 +62,146 @@ import { experience } from '../data/profile';
 </section>
 
 <style>
-  .timeline {
+  .companies {
     list-style: none;
-    margin: 0;
-    padding: 0 0 0 1.5rem;
+    display: grid;
+    gap: 1.25rem;
+  }
+  .company {
+    display: grid;
+    gap: 1.25rem;
+    padding: 1.5rem 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+  }
+  @media (min-width: 860px) {
+    .company {
+      grid-template-columns: 15rem 1fr;
+      gap: 2.5rem;
+      padding: 2rem;
+    }
+    .company-meta {
+      position: sticky;
+      top: calc(var(--header-h) + 1.5rem);
+      align-self: start;
+    }
+  }
+  .company-meta {
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+  }
+  .logo {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 12px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 1.15rem;
+  }
+  h3 {
+    font-size: 1.1rem;
+  }
+  .sub {
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+  .dates {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    margin-top: 0.2rem;
+  }
+
+  .roles {
+    list-style: none;
     position: relative;
     display: grid;
-    gap: 1rem;
+    gap: 0.25rem;
   }
-  .timeline::before {
+  .roles::before {
     content: '';
     position: absolute;
     left: 0.4rem;
-    top: 0.5rem;
-    bottom: 0.5rem;
+    top: 0.9rem;
+    bottom: 0.9rem;
     width: 2px;
     background: var(--border);
   }
-  .item {
+  .role {
     position: relative;
+    padding-left: 1.75rem;
   }
-  .dot {
+  .node {
     position: absolute;
-    left: -1.5rem;
-    top: 1.35rem;
-    width: 0.95rem;
-    height: 0.95rem;
+    left: 0;
+    top: 0.62rem;
+    width: 0.85rem;
+    height: 0.85rem;
     border-radius: 50%;
-    background: var(--bg);
-    border: 3px solid var(--accent);
-    transform: translateX(-0.05rem);
+    background: var(--surface);
+    border: 2px solid var(--border-strong);
+  }
+  .role:first-child .node {
+    border-color: var(--accent);
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft);
   }
   summary {
     list-style: none;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 0.25rem 1rem;
-    padding: 1.1rem 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.15rem 0.9rem;
+    padding: 0.35rem 2rem 0.35rem 0;
+    position: relative;
     cursor: pointer;
-    border-radius: var(--radius);
+    border-radius: 6px;
   }
   summary::-webkit-details-marker {
     display: none;
   }
-  .summary-main {
-    grid-column: 1 / 2;
+  .role-title {
+    font-weight: 650;
+    font-size: 1.02rem;
+    letter-spacing: -0.01em;
   }
-  h3 {
-    font-size: 1.05rem;
-  }
-  .company {
-    color: var(--muted);
-    font-size: 0.95rem;
-    margin-top: 0.2rem;
-  }
-  .dates {
-    grid-column: 1 / 2;
-    font-size: 0.88rem;
-    font-weight: 600;
+  .role-dates {
+    font-family: var(--mono);
+    font-size: 0.8rem;
     color: var(--accent);
-    font-variant-numeric: tabular-nums;
   }
   .chev {
-    grid-column: 2;
-    grid-row: 1 / 3;
-    align-self: center;
-    width: 0.65rem;
-    height: 0.65rem;
-    border-right: 2px solid var(--muted);
-    border-bottom: 2px solid var(--muted);
+    position: absolute;
+    right: 0.4rem;
+    top: 0.75rem;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-right: 2px solid var(--subtle);
+    border-bottom: 2px solid var(--subtle);
     transform: rotate(45deg);
     transition: transform 0.2s;
   }
   details[open] .chev {
     transform: rotate(-135deg);
+    top: 1rem;
   }
-  @media (min-width: 700px) {
-    summary {
-      grid-template-columns: 1fr auto auto;
-      align-items: center;
-    }
-    .dates {
-      grid-column: 2;
-      grid-row: 1;
-    }
-    .chev {
-      grid-column: 3;
-      grid-row: 1;
-    }
+  summary:hover .role-title {
+    color: var(--accent);
   }
   .body {
     display: grid;
-    gap: 1rem;
-    padding: 0 1.25rem 1.25rem;
+    gap: 0.9rem;
+    padding: 0.5rem 0 1.25rem;
+    color: var(--muted);
+    font-size: 0.97rem;
   }
   .role-summary {
-    color: var(--muted);
-    border-top: 1px solid var(--border);
-    padding-top: 1rem;
+    color: var(--text);
   }
 </style>

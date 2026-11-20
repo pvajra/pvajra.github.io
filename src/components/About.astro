@@ -4,9 +4,9 @@ import Icon from './Icon.astro';
 ---
 <section id="about" class="section section--alt" aria-labelledby="about-title">
   <div class="container grid">
-    <div>
-      <span class="eyebrow">About</span>
-      <h2 id="about-title" class="section-title">About me</h2>
+    <div class="text">
+      <span class="eyebrow"><span class="num">01</span> About</span>
+      <h2 id="about-title" class="section-title">Android engineer with production experience and on-device AI research</h2>
       <div class="bio">
         {about.bio.map((p) => <p>{p}</p>)}
       </div>
@@ -14,11 +14,9 @@ import Icon from './Icon.astro';
     <ul class="highlights">
       {about.highlights.map((h) => (
         <li class="card highlight">
-          <span class="tick"><Icon name="check" /></span>
-          <div>
-            <h3>{h.title}</h3>
-            <p>{h.text}</p>
-          </div>
+          <span class="ico"><Icon name={h.icon} /></span>
+          <h3>{h.title}</h3>
+          <p>{h.text}</p>
         </li>
       ))}
     </ul>
@@ -30,10 +28,10 @@ import Icon from './Icon.astro';
     display: grid;
     gap: 2.5rem;
   }
-  @media (min-width: 900px) {
+  @media (min-width: 960px) {
     .grid {
-      grid-template-columns: 1fr 1.1fr;
-      gap: 3.5rem;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 4rem;
       align-items: start;
     }
   }
@@ -47,34 +45,39 @@ import Icon from './Icon.astro';
   .highlights {
     list-style: none;
     display: grid;
-    gap: 0.85rem;
+    gap: 1rem;
   }
-  @media (min-width: 560px) and (max-width: 899px) {
+  @media (min-width: 560px) {
     .highlights {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
   .highlight {
-    display: flex;
-    gap: 0.85rem;
-    padding: 1.1rem 1.2rem;
+    display: grid;
+    align-content: start;
+    gap: 0.5rem;
+    padding: 1.35rem;
+    transition: border-color 0.2s;
   }
-  .tick {
-    flex-shrink: 0;
+  .highlight:hover {
+    border-color: var(--accent);
+  }
+  .ico {
     display: grid;
     place-items: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 8px;
+    width: 2.4rem;
+    height: 2.4rem;
+    margin-bottom: 0.35rem;
+    border-radius: 10px;
     background: var(--accent-soft);
     color: var(--accent);
   }
   h3 {
     font-size: 1rem;
-    margin-bottom: 0.25rem;
   }
   .highlight p {
     color: var(--muted);
-    font-size: 0.95rem;
+    font-size: 0.93rem;
+    line-height: 1.55;
   }
 </style>

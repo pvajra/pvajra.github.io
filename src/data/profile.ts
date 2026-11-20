@@ -29,9 +29,25 @@ export const person = {
   linkedinLabel: 'linkedin.com/in/pandurang-arun-vajramatti',
   github: 'https://github.com/pvajra',
   githubLabel: 'github.com/pvajra',
+  status: 'Open to Android roles in the UK',
 };
 
-export const about = {
+/** Key numbers shown under the hero. Keep to four. */
+export const metrics = [
+  { value: '2+ yrs', label: 'Commercial Android in Kotlin and Java' },
+  { value: '~60,000', label: 'Licences across apps I owned at TVS' },
+  { value: '100%', label: 'Legacy Java modules migrated to Kotlin' },
+  { value: 'MSc', label: 'Advanced Computer Science, Distinction' },
+];
+
+/** Shown in the Kotlin code card in the hero (desktop only). */
+export const codeCard = {
+  fileName: 'Engineer.kt',
+  stack: ['Kotlin', 'Java', 'Jetpack', 'Coroutines'],
+  focus: ['Offline-first apps', 'On-device AI'],
+};
+
+export const about: { bio: string[]; highlights: { title: string; icon: IconName; text: string }[] } = {
   bio: [
     'I am an Android engineer with over two years of commercial experience building production apps in Kotlin and Java for retail billing, payments and agri-fintech.',
     'I hold an MSc in Advanced Computer Science with Distinction from Newcastle University, where my dissertation looked at running agentic AI on Android devices. I am most interested in offline-first mobile apps and on-device AI.',
@@ -39,18 +55,22 @@ export const about = {
   highlights: [
     {
       title: 'Production ownership',
+      icon: 'layers',
       text: 'Owned three nationally used production apps end to end within two years of graduating, used across around 60,000 licences.',
     },
     {
       title: 'Sole Android developer',
+      icon: 'phone',
       text: 'Built and maintained the Android apps at an agri-fintech company, used by 65 field representatives to record around 30,000 farmer records for a credit score used by banks.',
     },
     {
       title: 'On-device AI research',
+      icon: 'cpu',
       text: 'Ran small language models on a real Android phone and measured speed, memory and kill recovery across 883 benchmark runs.',
     },
     {
       title: 'Breadth beyond Android',
+      icon: 'cloud',
       text: 'Hands-on work with Kubernetes, Docker, federated learning, security and formal verification.',
     },
   ],
@@ -180,8 +200,11 @@ export const featured = {
   tech: ['Kotlin', 'C++', 'JNI', 'Android NDK', 'llama.cpp', 'GGUF', 'AIDL', 'Binder IPC', 'Foreground services', 'Coroutines'],
 };
 
+export type IconName = 'layers' | 'phone' | 'cpu' | 'cloud' | 'leaf' | 'code' | 'shield';
+
 export type Project = {
   title: string;
+  icon: IconName;
   context: string;
   description: string;
   stat?: { value: string; label: string };
@@ -193,6 +216,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     title: 'Energy-Aware Federated Learning',
+    icon: 'leaf',
     context: 'MSc group project · team of six',
     description:
       'A federated learning framework for green IoT that optimises computation and communication energy together, using energy-aware client selection, dynamic model compression and a joint energy model.',
@@ -209,6 +233,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Kubernetes Deployment and Monitoring',
+    icon: 'cloud',
     context: 'MSc Cloud Computing',
     description:
       'Deployed a Java web app to Kubernetes and built a monitoring stack to observe it under load.',
@@ -221,6 +246,7 @@ export const projects: Project[] = [
   },
   {
     title: 'PC Ordering System',
+    icon: 'code',
     context: 'MSc Advanced Programming in Java',
     description:
       'A Java package that manages PC orders for preset manufacturer models and custom configurations.',
@@ -233,6 +259,7 @@ export const projects: Project[] = [
   },
   {
     title: 'Security Coursework',
+    icon: 'shield',
     context: 'MSc Secure Software Development and System Security',
     description:
       'Security analysis, formal verification and applied security across two modules.',
@@ -246,7 +273,6 @@ export const projects: Project[] = [
 ];
 
 export const skills: { group: string; items: string[] }[] = [
-  { group: 'Languages', items: ['Kotlin', 'Java', 'Python', 'SQL', 'C', 'C++'] },
   {
     group: 'Android',
     items: [
@@ -254,6 +280,7 @@ export const skills: { group: string; items: string[] }[] = [
       'Foreground services', 'Background work', 'Process lifecycle', 'AIDL', 'Binder IPC', 'JNI', 'NDK',
     ],
   },
+  { group: 'Languages', items: ['Kotlin', 'Java', 'Python', 'SQL', 'C', 'C++'] },
   {
     group: 'Design and testing',
     items: ['OOP', 'SOLID', 'Factory pattern', 'Repository pattern', 'Offline-first apps', 'Java-to-Kotlin migration', 'JUnit'],

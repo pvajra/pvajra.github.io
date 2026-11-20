@@ -2,19 +2,23 @@
 import { projects } from '../data/profile';
 import Icon from './Icon.astro';
 ---
-<section id="projects" class="section" aria-labelledby="projects-title">
+<section id="projects" class="section section--alt" aria-labelledby="projects-title">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">Projects</span>
+      <span class="eyebrow"><span class="num">04</span> Projects</span>
       <h2 id="projects-title" class="section-title">More projects</h2>
+      <p class="lead">MSc coursework across distributed ML, cloud infrastructure, software design and security.</p>
     </div>
     <ul class="grid">
       {projects.map((p) => (
         <li class="card project">
-          <p class="context">{p.context}</p>
+          <div class="top">
+            <span class="ico"><Icon name={p.icon} /></span>
+            <p class="context">{p.context}</p>
+          </div>
           <h3>{p.title}</h3>
           {p.stat && (
-            <p class="stat"><strong>{p.stat.value}</strong> {p.stat.label}</p>
+            <p class="stat"><strong>{p.stat.value}</strong> <span>{p.stat.label}</span></p>
           )}
           <p class="desc">{p.description}</p>
           {p.points && (
@@ -22,15 +26,17 @@ import Icon from './Icon.astro';
               {p.points.map((pt) => <li>{pt}</li>)}
             </ul>
           )}
-          <ul class="chips chips--small" aria-label="Technologies">
-            {p.tech.map((t) => <li class="chip">{t}</li>)}
-          </ul>
-          {p.link && (
-            <a class="link" href={p.link.href} rel="noopener noreferrer" target="_blank">
-              <Icon name="github" /> {p.link.label}
-              <span class="visually-hidden">: {p.title} (opens in a new tab)</span>
-            </a>
-          )}
+          <div class="foot">
+            <ul class="chips chips--small" aria-label="Technologies">
+              {p.tech.map((t) => <li class="chip">{t}</li>)}
+            </ul>
+            {p.link && (
+              <a class="link" href={p.link.href} rel="noopener noreferrer" target="_blank">
+                <Icon name="github" /> {p.link.label}
+                <span class="visually-hidden">: {p.title} (opens in a new tab)</span>
+              </a>
+            )}
+          </div>
         </li>
       ))}
     </ul>
@@ -46,50 +52,85 @@ import Icon from './Icon.astro';
   @media (min-width: 760px) {
     .grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem;
     }
   }
   .project {
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
-    padding: 1.4rem;
+    gap: 0.85rem;
+    padding: 1.5rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .project:hover {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow);
+  }
+  .top {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .ico {
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 10px;
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .ico :global(svg) {
+    width: 1.1rem;
+    height: 1.1rem;
   }
   .context {
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    color: var(--subtle);
+    line-height: 1.4;
   }
   h3 {
-    font-size: 1.15rem;
-    margin-top: -0.35rem;
+    font-size: 1.18rem;
   }
   .stat {
-    padding: 0.6rem 0.8rem;
-    border-radius: 8px;
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding: 0.7rem 0.9rem;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
     background: var(--accent-soft);
-    font-size: 0.95rem;
+    font-size: 0.92rem;
   }
   .stat strong {
     color: var(--accent);
-    font-size: 1.15rem;
+    font-size: 1.5rem;
+    letter-spacing: -0.03em;
+    line-height: 1;
   }
   .desc,
   .points {
     color: var(--muted);
     font-size: 0.95rem;
   }
-  .chips {
+  .foot {
     margin-top: auto;
-    padding-top: 0.3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
   }
   .link {
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
-    align-self: flex-start;
     font-weight: 600;
+    font-size: 0.92rem;
     min-height: 2.75rem;
   }
   .link :global(svg) {

@@ -1,39 +1,57 @@
+@import '@fontsource-variable/inter';
+
+/* ---------- Design tokens ---------- */
 :root {
   --bg: #ffffff;
-  --bg-alt: #f5f7f8;
+  --bg-alt: #f6f8f7;
   --surface: #ffffff;
-  --text: #15191c;
-  --muted: #4a545b;
-  --border: #dde3e6;
-  --accent: #0b6e79;
-  --accent-hover: #08545c;
-  --accent-soft: #e3f2f3;
-  --on-accent: #ffffff;
-  --shadow: 0 1px 2px rgb(0 0 0 / 0.05), 0 4px 16px rgb(0 0 0 / 0.04);
+  --surface-2: #f1f4f2;
+  --text: #0f1712;
+  --muted: #4d5a53;
+  --subtle: #5c6962;
+  --border: #e2e8e4;
+  --border-strong: #cbd5cf;
 
-  --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  /* Single accent: Android green (deepened for AA contrast in light mode) */
+  --accent: #0a7a48;
+  --accent-hover: #075e37;
+  --accent-soft: #e6f4ec;
+  --on-accent: #ffffff;
+
+  --shadow-sm: 0 1px 2px rgb(16 24 20 / 0.06);
+  --shadow: 0 1px 2px rgb(16 24 20 / 0.05), 0 8px 24px -8px rgb(16 24 20 / 0.1);
+
+  --font: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  --radius: 12px;
-  --max: 68rem;
-  --header-h: 3.75rem;
+  --radius: 14px;
+  --radius-sm: 8px;
+  --max: 72rem;
+  --header-h: 4rem;
   color-scheme: light;
 }
 
 :root[data-theme='dark'] {
-  --bg: #0f1417;
-  --bg-alt: #141b1f;
-  --surface: #182025;
-  --text: #e8eef0;
-  --muted: #a6b3b9;
-  --border: #2a363c;
-  --accent: #5ec8d3;
-  --accent-hover: #8adbe3;
-  --accent-soft: #16343a;
-  --on-accent: #08262a;
+  --bg: #0b0f0d;
+  --bg-alt: #0f1512;
+  --surface: #131a16;
+  --surface-2: #18211c;
+  --text: #e8eeea;
+  --muted: #a3b2a9;
+  --subtle: #8d9c94;
+  --border: #232e28;
+  --border-strong: #31403788;
+
+  --accent: #3ddc84;
+  --accent-hover: #6ee7a4;
+  --accent-soft: #12301f;
+  --on-accent: #04230f;
+
+  --shadow-sm: none;
   --shadow: none;
   color-scheme: dark;
 }
 
+/* ---------- Base ---------- */
 *,
 *::before,
 *::after {
@@ -64,30 +82,38 @@ body {
   color: var(--text);
   font-family: var(--font);
   font-size: 1rem;
-  line-height: 1.6;
-  text-rendering: optimizeLegibility;
+  line-height: 1.65;
+  font-feature-settings: 'cv11', 'ss01';
+  -webkit-font-smoothing: antialiased;
 }
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
   line-height: 1.2;
   margin: 0;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
+  font-weight: 650;
 }
 
-p {
+p,
+ul,
+ol,
+dl,
+dd {
   margin: 0;
 }
 
-ul {
-  margin: 0;
+ul,
+ol {
   padding: 0;
 }
 
 a {
   color: var(--accent);
-  text-underline-offset: 0.18em;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
 }
 
 a:hover {
@@ -95,9 +121,13 @@ a:hover {
 }
 
 :focus-visible {
-  outline: 3px solid var(--accent);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 6px;
+}
+
+main:focus {
+  outline: none;
 }
 
 .visually-hidden {
@@ -120,7 +150,7 @@ a:hover {
   padding: 0.6rem 1rem;
   background: var(--accent);
   color: var(--on-accent);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   font-weight: 600;
   text-decoration: none;
 }
@@ -130,6 +160,7 @@ a:hover {
   color: var(--on-accent);
 }
 
+/* ---------- Layout ---------- */
 .container {
   width: 100%;
   max-width: var(--max);
@@ -139,12 +170,13 @@ a:hover {
 
 @media (min-width: 640px) {
   .container {
-    padding: 0 1.5rem;
+    padding: 0 2rem;
   }
 }
 
 .section {
-  padding: 4rem 0;
+  padding: 4.5rem 0;
+  border-top: 1px solid var(--border);
 }
 
 .section--alt {
@@ -153,39 +185,58 @@ a:hover {
 
 @media (min-width: 768px) {
   .section {
-    padding: 5.5rem 0;
+    padding: 6.5rem 0;
   }
 }
 
 .section-head {
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
+  max-width: 44rem;
 }
 
 .eyebrow {
-  display: block;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
   color: var(--accent);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.85rem;
+}
+
+.eyebrow .num {
+  color: var(--subtle);
+}
+
+.eyebrow::after {
+  content: '';
+  width: 2.5rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.5;
 }
 
 .section-title {
-  font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.1rem);
+  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
 }
 
 .lead {
   color: var(--muted);
-  max-width: 42rem;
-  margin-top: 0.75rem;
+  font-size: 1.06rem;
+  margin-top: 0.85rem;
 }
 
+/* ---------- Components ---------- */
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-sm);
 }
 
 .chips {
@@ -197,40 +248,48 @@ a:hover {
 
 .chip {
   display: inline-block;
-  padding: 0.2rem 0.65rem;
-  font-size: 0.85rem;
+  padding: 0.22rem 0.7rem;
+  font-size: 0.84rem;
+  font-weight: 500;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: var(--bg);
+  background: var(--surface-2);
   color: var(--text);
+  line-height: 1.5;
 }
 
 .chips--small .chip {
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   padding: 0.12rem 0.55rem;
+  background: transparent;
+  color: var(--muted);
 }
 
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  min-height: 2.75rem;
-  padding: 0.6rem 1.1rem;
+  gap: 0.55rem;
+  min-height: 2.85rem;
+  padding: 0.6rem 1.15rem;
   border-radius: 10px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-strong);
   background: var(--surface);
   color: var(--text);
   font: inherit;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.94rem;
   text-decoration: none;
   cursor: pointer;
-  transition: border-color 0.15s, background-color 0.15s, color 0.15s;
+  transition: border-color 0.15s, background-color 0.15s, color 0.15s, transform 0.15s;
 }
 
 .btn:hover {
   border-color: var(--accent);
   color: var(--text);
+}
+
+.btn:active {
+  transform: translateY(1px);
 }
 
 .btn--primary {
@@ -254,25 +313,21 @@ a:hover {
 .bullets {
   list-style: none;
   display: grid;
-  gap: 0.5rem;
+  gap: 0.55rem;
 }
 
 .bullets li {
   position: relative;
-  padding-left: 1.1rem;
+  padding-left: 1.25rem;
 }
 
 .bullets li::before {
   content: '';
   position: absolute;
-  left: 0;
-  top: 0.65em;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
+  left: 0.1rem;
+  top: 0.72em;
+  width: 0.45rem;
+  height: 2px;
+  border-radius: 2px;
   background: var(--accent);
-}
-
-main:focus {
-  outline: none;
 }
