@@ -2,24 +2,16 @@
 import { person } from '../data/profile';
 const year = new Date().getFullYear();
 ---
-<footer class="footer">
-  <div class="container row">
-    <p>© {year} {person.fullName}</p>
-    <a href="#top">Back to top</a>
-  </div>
+<footer class="wrap">
+  <p>© {year} {person.fullName}. Built with Astro and hosted on GitHub Pages.</p>
 </footer>
 
 <style>
-  .footer {
-    border-top: 1px solid var(--border);
-    padding: 1.5rem 0;
-    font-size: 0.9rem;
+  footer {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+    background: linear-gradient(var(--rule), var(--rule)) no-repeat top / calc(100% - 2.5rem) 1px;
+    font-size: 0.88rem;
     color: var(--muted);
-  }
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0.5rem 1rem;
   }
 </style>

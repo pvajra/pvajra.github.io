@@ -1,112 +1,38 @@
 ---
 import { person, site } from '../data/profile';
-import Icon from './Icon.astro';
 ---
-<section id="contact" class="section" aria-labelledby="contact-title">
-  <div class="container">
-    <div class="cta card">
-      <div class="cta-text">
-        <span class="eyebrow"><span class="num">07</span> Contact</span>
-        <h2 id="contact-title" class="section-title">Let’s talk about your Android team</h2>
-        <p class="lead">I’m looking for Android, mobile and on-device AI engineering roles. Email is the best way to reach me.</p>
-        <div class="actions">
-          <a class="btn btn--primary" href={`mailto:${person.email}`}><Icon name="mail" /> Email me</a>
-          <a class="btn" href={site.cvFile} download><Icon name="download" /> Download CV <span class="visually-hidden">(PDF)</span></a>
-        </div>
-      </div>
-
-      <ul class="list">
-        <li>
-          <span class="ico"><Icon name="mail" /></span>
-          <div><p class="k">Email</p><a href={`mailto:${person.email}`}>{person.email}</a></div>
-        </li>
-        <li>
-          <span class="ico"><Icon name="linkedin" /></span>
-          <div>
-            <p class="k">LinkedIn</p>
-            <a href={person.linkedin} rel="noopener noreferrer" target="_blank">{person.linkedinLabel}<span class="visually-hidden"> (opens in a new tab)</span></a>
-          </div>
-        </li>
-        <li>
-          <span class="ico"><Icon name="github" /></span>
-          <div>
-            <p class="k">GitHub</p>
-            <a href={person.github} rel="noopener noreferrer" target="_blank">{person.githubLabel}<span class="visually-hidden"> (opens in a new tab)</span></a>
-          </div>
-        </li>
-        <li>
-          <span class="ico"><Icon name="pin" /></span>
-          <div>
-            <p class="k">Location</p>
-            <p>{person.location}</p>
-            <p class="muted">{person.relocation}. {person.rightToWork}</p>
-          </div>
-        </li>
-      </ul>
-    </div>
+<section id="contact" aria-labelledby="contact-title">
+  <div class="wrap">
+    <h2 id="contact-title">Contact</h2>
+    <p>I’m looking for Android, mobile and on-device AI engineering roles. The best way to reach me is by email.</p>
+    <ul class="contact">
+      <li><span class="k">Email</span> <a href={`mailto:${person.email}`}>{person.email}</a></li>
+      <li><span class="k">LinkedIn</span> <a href={person.linkedin} rel="noopener noreferrer">{person.linkedinLabel}</a></li>
+      <li><span class="k">GitHub</span> <a href={person.github} rel="noopener noreferrer">{person.githubLabel}</a></li>
+      <li><span class="k">Location</span> {person.location}. {person.relocation}.</li>
+      <li><span class="k">Right to work</span> {person.rightToWork}</li>
+      <li><span class="k">CV</span> <a href={site.cvFile} download>Download (PDF)</a></li>
+    </ul>
   </div>
 </section>
 
 <style>
-  .cta {
-    display: grid;
-    gap: 2.5rem;
-    padding: 1.75rem 1.25rem;
-  }
-  @media (min-width: 640px) {
-    .cta {
-      padding: 2.5rem;
-    }
-  }
-  @media (min-width: 960px) {
-    .cta {
-      grid-template-columns: 1.1fr 1fr;
-      gap: 3.5rem;
-      padding: 3rem;
-    }
-  }
-  .actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    margin-top: 1.75rem;
-  }
-  .list {
+  .contact {
     list-style: none;
+    padding: 0;
+  }
+  .contact li {
     display: grid;
-    gap: 1.25rem;
-    align-content: center;
-  }
-  li {
-    display: flex;
-    gap: 0.9rem;
-    align-items: flex-start;
-    min-width: 0;
-  }
-  li div {
-    min-width: 0;
-  }
-  .ico {
-    flex-shrink: 0;
-    display: grid;
-    place-items: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 10px;
-    background: var(--accent-soft);
-    color: var(--accent);
-  }
-  .k {
-    font-family: var(--mono);
-    font-size: 0.74rem;
-    color: var(--subtle);
-  }
-  a {
-    font-weight: 600;
+    gap: 0 1.5rem;
+    margin-bottom: 0.5rem;
     overflow-wrap: anywhere;
   }
-  .muted {
+  @media (min-width: 600px) {
+    .contact li {
+      grid-template-columns: 8rem 1fr;
+    }
+  }
+  .k {
     color: var(--muted);
-    font-size: 0.92rem;
   }
 </style>
