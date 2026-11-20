@@ -1,83 +1,21 @@
 ---
 import { about } from '../data/profile';
-import Icon from './Icon.astro';
 ---
-<section id="about" class="section section--alt" aria-labelledby="about-title">
-  <div class="container grid">
-    <div class="text">
-      <span class="eyebrow"><span class="num">01</span> About</span>
-      <h2 id="about-title" class="section-title">Android engineer with production experience and on-device AI research</h2>
-      <div class="bio">
-        {about.bio.map((p) => <p>{p}</p>)}
-      </div>
-    </div>
+<section id="about" aria-labelledby="about-title">
+  <div class="wrap">
+    <h2 id="about-title">About</h2>
+    {about.bio.map((p) => <p>{p}</p>)}
     <ul class="highlights">
-      {about.highlights.map((h) => (
-        <li class="card highlight">
-          <span class="ico"><Icon name={h.icon} /></span>
-          <h3>{h.title}</h3>
-          <p>{h.text}</p>
-        </li>
-      ))}
+      {about.highlights.map((h) => <li><strong>{h.title}.</strong> {h.text}</li>)}
     </ul>
   </div>
 </section>
 
 <style>
-  .grid {
-    display: grid;
-    gap: 2.5rem;
-  }
-  @media (min-width: 960px) {
-    .grid {
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 4rem;
-      align-items: start;
-    }
-  }
-  .bio {
-    display: grid;
-    gap: 1rem;
-    margin-top: 1.25rem;
-    color: var(--muted);
-    font-size: 1.05rem;
-  }
   .highlights {
-    list-style: none;
-    display: grid;
-    gap: 1rem;
+    margin-top: 1.5rem;
   }
-  @media (min-width: 560px) {
-    .highlights {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-  .highlight {
-    display: grid;
-    align-content: start;
-    gap: 0.5rem;
-    padding: 1.35rem;
-    transition: border-color 0.2s;
-  }
-  .highlight:hover {
-    border-color: var(--accent);
-  }
-  .ico {
-    display: grid;
-    place-items: center;
-    width: 2.4rem;
-    height: 2.4rem;
-    margin-bottom: 0.35rem;
-    border-radius: 10px;
-    background: var(--accent-soft);
-    color: var(--accent);
-  }
-  h3 {
-    font-size: 1rem;
-  }
-  .highlight p {
-    color: var(--muted);
-    font-size: 0.93rem;
-    line-height: 1.55;
+  .highlights li {
+    margin-bottom: 0.6rem;
   }
 </style>

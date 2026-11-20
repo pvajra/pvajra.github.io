@@ -1,83 +1,24 @@
 ---
 import { education } from '../data/profile';
 ---
-<section id="education" class="section section--alt" aria-labelledby="education-title">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow"><span class="num">06</span> Education</span>
-      <h2 id="education-title" class="section-title">Education</h2>
-    </div>
-    <ul class="grid">
-      {education.map((e) => (
-        <li class="card edu">
-          <div class="row">
-            <p class="dates">{e.start} – {e.end}</p>
-            {e.result && <p class="badge">{e.result}</p>}
-          </div>
-          <h3>{e.degree}</h3>
-          <p class="school">{e.school}</p>
-          <p class="loc">{e.location}</p>
-          {e.note && <p class="note">{e.note}</p>}
-        </li>
-      ))}
-    </ul>
+<section id="education" aria-labelledby="education-title">
+  <div class="wrap">
+    <h2 id="education-title">Education</h2>
+    {education.map((e) => (
+      <div class="edu">
+        <h3>{e.degree}{e.result && <span>, {e.result}</span>}</h3>
+        <p class="muted">{e.school}, {e.location} · {e.start} – {e.end}</p>
+        {e.note && <p>{e.note}</p>}
+      </div>
+    ))}
   </div>
 </section>
 
 <style>
-  .grid {
-    list-style: none;
-    display: grid;
-    gap: 1rem;
-  }
-  @media (min-width: 760px) {
-    .grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1.25rem;
-    }
-  }
   .edu {
-    display: grid;
-    align-content: start;
-    gap: 0.35rem;
-    padding: 1.5rem;
+    margin-bottom: 1.5rem;
   }
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-  .dates {
-    font-family: var(--mono);
-    font-size: 0.8rem;
-    color: var(--subtle);
-  }
-  h3 {
-    font-size: 1.15rem;
-  }
-  .badge {
-    font-size: 0.78rem;
-    font-weight: 650;
-    padding: 0.18rem 0.65rem;
-    border-radius: 999px;
-    background: var(--accent-soft);
-    color: var(--accent);
-  }
-  .school {
-    font-weight: 550;
-  }
-  .loc {
-    font-size: 0.92rem;
-    color: var(--muted);
-  }
-  .note {
-    margin-top: 0.6rem;
-    padding-top: 0.75rem;
-    border-top: 1px solid var(--border);
-    color: var(--muted);
-    font-size: 0.93rem;
+  .edu p {
+    margin-bottom: 0.3rem;
   }
 </style>

@@ -1,69 +1,42 @@
 ---
 import { skills } from '../data/profile';
-const [primary, ...rest] = skills;
 ---
-<section id="skills" class="section" aria-labelledby="skills-title">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow"><span class="num">05</span> Skills</span>
-      <h2 id="skills-title" class="section-title">Technical skills</h2>
-    </div>
-
-    <div class="card primary">
-      <h3>{primary.group}</h3>
-      <ul class="chips">
-        {primary.items.map((s) => <li class="chip chip--accent">{s}</li>)}
-      </ul>
-    </div>
-
-    <div class="grid">
-      {rest.map((g) => (
-        <div class="group">
-          <h3>{g.group}</h3>
-          <ul class="chips">
-            {g.items.map((s) => <li class="chip">{s}</li>)}
-          </ul>
+<section id="skills" aria-labelledby="skills-title">
+  <div class="wrap">
+    <h2 id="skills-title">Skills</h2>
+    <dl>
+      {skills.map((g) => (
+        <div class="row">
+          <dt>{g.group}</dt>
+          <dd>{g.items.join(', ')}</dd>
         </div>
       ))}
-    </div>
+    </dl>
   </div>
 </section>
 
 <style>
-  .primary {
-    padding: 1.5rem;
-    margin-bottom: 2.5rem;
-    border-color: var(--accent);
-    background: linear-gradient(var(--accent-soft), var(--surface) 140%);
+  dl {
+    margin: 0;
   }
-  .chip--accent {
-    background: var(--surface);
-    border-color: var(--border-strong);
-  }
-  .grid {
+  .row {
     display: grid;
-    gap: 2rem 3rem;
+    gap: 0.1rem 1.5rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--rule);
   }
-  @media (min-width: 760px) {
-    .grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+  .row:last-child {
+    border-bottom: 0;
+  }
+  @media (min-width: 600px) {
+    .row {
+      grid-template-columns: 11rem 1fr;
     }
   }
-  @media (min-width: 1100px) {
-    .grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
+  dt {
+    font-weight: 600;
   }
-  h3 {
-    font-family: var(--mono);
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--subtle);
-    margin-bottom: 0.8rem;
-  }
-  .primary h3 {
-    color: var(--accent);
+  dd {
+    margin: 0;
   }
 </style>
