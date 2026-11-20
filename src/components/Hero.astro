@@ -1,0 +1,59 @@
+---
+import { person, site } from '../data/profile';
+import Icon from './Icon.astro';
+---
+<section id="top" class="hero" aria-labelledby="hero-title">
+  <div class="container">
+    <p class="eyebrow">{person.location}</p>
+    <h1 id="hero-title">{person.name}</h1>
+    <p class="headline">{person.headline}</p>
+    <p class="tagline">{person.tagline}</p>
+    <div class="actions">
+      <a class="btn btn--primary" href={site.cvFile} download>
+        <Icon name="download" /> Download CV <span class="visually-hidden">(PDF)</span>
+      </a>
+      <a class="btn" href={person.linkedin} rel="noopener noreferrer" target="_blank">
+        <Icon name="linkedin" /> LinkedIn <span class="visually-hidden">(opens in a new tab)</span>
+      </a>
+      <a class="btn" href={person.github} rel="noopener noreferrer" target="_blank">
+        <Icon name="github" /> GitHub <span class="visually-hidden">(opens in a new tab)</span>
+      </a>
+      <a class="btn" href={`mailto:${person.email}`}>
+        <Icon name="mail" /> Email
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: 4.5rem 0 4rem;
+  }
+  @media (min-width: 768px) {
+    .hero {
+      padding: 7rem 0 6rem;
+    }
+  }
+  h1 {
+    font-size: clamp(2.3rem, 1.6rem + 3.5vw, 3.8rem);
+    letter-spacing: -0.025em;
+  }
+  .headline {
+    margin-top: 0.75rem;
+    font-size: clamp(1.05rem, 0.95rem + 0.6vw, 1.35rem);
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .tagline {
+    margin-top: 1rem;
+    max-width: 38rem;
+    font-size: 1.08rem;
+    color: var(--muted);
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 2rem;
+  }
+</style>

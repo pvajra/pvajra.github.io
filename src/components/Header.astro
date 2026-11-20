@@ -1,0 +1,176 @@
+---
+import { nav, person } from '../data/profile';
+import Icon from './Icon.astro';
+---
+<header class="site-header">
+  <div class="container bar">
+    <a class="brand" href="#top" aria-label={`${person.name}, back to top`}>
+      <span class="mark" aria-hidden="true">{person.initials}</span>
+      <span class="brand-name">{person.name}</span>
+    </a>
+
+    <nav aria-label="Primary">
+      <button class="icon-btn menu-btn" type="button" aria-expanded="false" aria-controls="nav-list">
+        <span class="when-closed"><Icon name="menu" /></span>
+        <span class="when-open"><Icon name="close" /></span>
+        <span class="visually-hidden">Menu</span>
+      </button>
+      <ul id="nav-list" class="nav-list">
+        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <button class="icon-btn theme-btn" type="button" aria-label="Switch to dark theme">
+      <span class="show-light"><Icon name="moon" /></span>
+      <span class="show-dark"><Icon name="sun" /></span>
+    </button>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: saturate(160%) blur(10px);
+    -webkit-backdrop-filter: saturate(160%) blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    height: var(--header-h);
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 700;
+    margin-right: auto;
+  }
+  .mark {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 8px;
+    background: var(--accent);
+    color: var(--on-accent);
+    font-size: 0.85rem;
+    letter-spacing: -0.02em;
+  }
+  .brand-name {
+    font-size: 0.98rem;
+  }
+  .icon-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+  }
+  .icon-btn:hover {
+    border-color: var(--accent);
+  }
+  .icon-btn > span {
+    display: inline-flex;
+  }
+  .icon-btn > .when-open,
+  .icon-btn > .show-dark,
+  .menu-btn[aria-expanded='true'] > .when-closed,
+  :global([data-theme='dark']) .icon-btn > .show-light {
+    display: none;
+  }
+  .menu-btn[aria-expanded='true'] > .when-open,
+  :global([data-theme='dark']) .icon-btn > .show-dark {
+    display: inline-flex;
+  }
+
+  .nav-list {
+    list-style: none;
+    display: none;
+    position: absolute;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    padding: 0.5rem 1rem 1rem;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-list.open {
+    display: flex;
+  }
+  .nav-list a {
+    display: block;
+    padding: 0.7rem 0.25rem;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .nav-list a:hover {
+    color: var(--accent);
+  }
+
+  @media (min-width: 900px) {
+    .menu-btn {
+      display: none;
+    }
+    .nav-list {
+      display: flex;
+      position: static;
+      flex-direction: row;
+      gap: 0.25rem;
+      padding: 0;
+      background: none;
+      border: 0;
+    }
+    .nav-list a {
+      padding: 0.4rem 0.6rem;
+      font-size: 0.92rem;
+      color: var(--muted);
+      border-radius: 6px;
+    }
+  }
+</style>
+
+<script>
+  const menuBtn = document.querySelector<HTMLButtonElement>('.menu-btn');
+  const list = document.getElementById('nav-list');
+  const setMenu = (open: boolean) => {
+    menuBtn?.setAttribute('aria-expanded', String(open));
+    list?.classList.toggle('open', open);
+  };
+  menuBtn?.addEventListener('click', () => setMenu(menuBtn.getAttribute('aria-expanded') !== 'true'));
+  list?.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).closest('a')) setMenu(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menuBtn?.getAttribute('aria-expanded') === 'true') {
+      setMenu(false);
+      menuBtn.focus();
+    }
+  });
+
+  const themeBtn = document.querySelector<HTMLButtonElement>('.theme-btn');
+  const root = document.documentElement;
+  const syncLabel = () => {
+    const dark = root.dataset.theme === 'dark';
+    themeBtn?.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+  };
+  syncLabel();
+  themeBtn?.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch {}
+    syncLabel();
+  });
+</script>

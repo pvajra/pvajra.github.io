@@ -1,0 +1,37 @@
+---
+import { skills } from '../data/profile';
+---
+<section id="skills" class="section section--alt" aria-labelledby="skills-title">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Skills</span>
+      <h2 id="skills-title" class="section-title">What I work with</h2>
+    </div>
+    <div class="grid">
+      {skills.map((g) => (
+        <div class="group">
+          <h3>{g.group}</h3>
+          <ul class="chips">
+            {g.items.map((s) => <li class="chip">{s}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    gap: 1.75rem 2.5rem;
+  }
+  @media (min-width: 760px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.65rem;
+  }
+</style>
