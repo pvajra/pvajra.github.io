@@ -1,14 +1,23 @@
 ---
 import { skills } from '../data/profile';
+const [primary, ...rest] = skills;
 ---
-<section id="skills" class="section section--alt" aria-labelledby="skills-title">
+<section id="skills" class="section" aria-labelledby="skills-title">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">Skills</span>
-      <h2 id="skills-title" class="section-title">What I work with</h2>
+      <span class="eyebrow"><span class="num">05</span> Skills</span>
+      <h2 id="skills-title" class="section-title">Technical skills</h2>
     </div>
+
+    <div class="card primary">
+      <h3>{primary.group}</h3>
+      <ul class="chips">
+        {primary.items.map((s) => <li class="chip chip--accent">{s}</li>)}
+      </ul>
+    </div>
+
     <div class="grid">
-      {skills.map((g) => (
+      {rest.map((g) => (
         <div class="group">
           <h3>{g.group}</h3>
           <ul class="chips">
@@ -21,17 +30,40 @@ import { skills } from '../data/profile';
 </section>
 
 <style>
+  .primary {
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+    border-color: var(--accent);
+    background: linear-gradient(var(--accent-soft), var(--surface) 140%);
+  }
+  .chip--accent {
+    background: var(--surface);
+    border-color: var(--border-strong);
+  }
   .grid {
     display: grid;
-    gap: 1.75rem 2.5rem;
+    gap: 2rem 3rem;
   }
   @media (min-width: 760px) {
     .grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
+  @media (min-width: 1100px) {
+    .grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
   h3 {
-    font-size: 0.95rem;
-    margin-bottom: 0.65rem;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--subtle);
+    margin-bottom: 0.8rem;
+  }
+  .primary h3 {
+    color: var(--accent);
   }
 </style>

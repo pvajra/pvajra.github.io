@@ -1,19 +1,22 @@
 ---
 import { education } from '../data/profile';
 ---
-<section id="education" class="section" aria-labelledby="education-title">
+<section id="education" class="section section--alt" aria-labelledby="education-title">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow">Education</span>
+      <span class="eyebrow"><span class="num">06</span> Education</span>
       <h2 id="education-title" class="section-title">Education</h2>
     </div>
     <ul class="grid">
       {education.map((e) => (
         <li class="card edu">
-          <p class="dates"><time>{e.start}</time> – <time>{e.end}</time></p>
+          <div class="row">
+            <p class="dates">{e.start} – {e.end}</p>
+            {e.result && <p class="badge">{e.result}</p>}
+          </div>
           <h3>{e.degree}</h3>
-          {e.result && <p class="badge">{e.result}</p>}
-          <p class="school">{e.school}, {e.location}</p>
+          <p class="school">{e.school}</p>
+          <p class="loc">{e.location}</p>
           {e.note && <p class="note">{e.note}</p>}
         </li>
       ))}
@@ -30,36 +33,51 @@ import { education } from '../data/profile';
   @media (min-width: 760px) {
     .grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem;
     }
   }
   .edu {
     display: grid;
     align-content: start;
-    gap: 0.45rem;
-    padding: 1.4rem;
+    gap: 0.35rem;
+    padding: 1.5rem;
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
   }
   .dates {
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--subtle);
   }
   h3 {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
   }
   .badge {
-    justify-self: start;
-    font-size: 0.82rem;
-    font-weight: 700;
-    padding: 0.15rem 0.6rem;
+    font-size: 0.78rem;
+    font-weight: 650;
+    padding: 0.18rem 0.65rem;
     border-radius: 999px;
     background: var(--accent-soft);
     color: var(--accent);
   }
   .school {
-    font-weight: 500;
+    font-weight: 550;
+  }
+  .loc {
+    font-size: 0.92rem;
+    color: var(--muted);
   }
   .note {
+    margin-top: 0.6rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
     color: var(--muted);
-    font-size: 0.95rem;
+    font-size: 0.93rem;
   }
 </style>

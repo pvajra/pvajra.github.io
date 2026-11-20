@@ -8,21 +8,21 @@ const out = (f) => fileURLToPath(new URL(`../public/${f}`, import.meta.url));
 const font = "system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
 
 const og = `<!doctype html><html><body style="margin:0">
-<div style="width:1200px;height:630px;box-sizing:border-box;padding:80px 88px;background:#0f1417;color:#e8eef0;font-family:${font};display:flex;flex-direction:column;justify-content:space-between">
+<div style="width:1200px;height:630px;box-sizing:border-box;padding:80px 88px;background:#0b120e;color:#e8eeea;font-family:${font};display:flex;flex-direction:column;justify-content:space-between">
   <div style="display:flex;align-items:center;gap:20px">
-    <div style="width:72px;height:72px;border-radius:16px;background:#5ec8d3;color:#08262a;display:grid;place-items:center;font-weight:800;font-size:32px;letter-spacing:-1px">PV</div>
-    <div style="font-size:26px;color:#a6b3b9">pvajra.github.io</div>
+    <div style="width:72px;height:72px;border-radius:16px;background:#3ddc84;color:#04230f;display:grid;place-items:center;font-weight:800;font-size:32px;letter-spacing:-1px">PV</div>
+    <div style="font-size:26px;color:#a7b5ad">pvajra.github.io</div>
   </div>
   <div>
     <div style="font-size:76px;font-weight:800;letter-spacing:-2px;line-height:1.05">Pandurang Vajramatti</div>
-    <div style="margin-top:22px;font-size:36px;font-weight:600;color:#5ec8d3">Android Software Engineer</div>
-    <div style="margin-top:10px;font-size:30px;color:#a6b3b9">Kotlin · Java · On-Device AI</div>
+    <div style="margin-top:22px;font-size:36px;font-weight:600;color:#3ddc84">Android Software Engineer</div>
+    <div style="margin-top:10px;font-size:30px;color:#a7b5ad">Kotlin · Java · On-Device AI</div>
   </div>
-  <div style="height:8px;width:160px;border-radius:4px;background:#5ec8d3"></div>
+  <div style="height:8px;width:160px;border-radius:4px;background:#3ddc84"></div>
 </div></body></html>`;
 
 const icon = `<!doctype html><html><body style="margin:0">
-<div style="width:180px;height:180px;background:#0b6e79;color:#fff;font-family:${font};display:grid;place-items:center;font-weight:700;font-size:80px;letter-spacing:-3px">PV</div>
+<div style="width:180px;height:180px;background:#0a7a48;color:#fff;font-family:${font};display:grid;place-items:center;font-weight:700;font-size:80px;letter-spacing:-3px">PV</div>
 </body></html>`;
 
 const browser = await chromium.launch();

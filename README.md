@@ -28,6 +28,8 @@ All text lives in **`src/data/profile.ts`**. Change it there and the page update
 | Skill chips | `skills` |
 | Degrees | `education` |
 | Header links | `nav` |
+| Key numbers under the hero | `metrics` |
+| "Open to roles" badge | `person.status` |
 
 Other files you may want:
 
@@ -38,7 +40,8 @@ Other files you may want:
   npm i -D playwright && npx playwright install chromium
   node scripts/generate-images.mjs
   ```
-- **Colours:** the CSS variables at the top of `src/styles/global.css`. `--accent` is the single accent colour, with a separate value for dark mode.
+- **Colours:** the CSS variables at the top of `src/styles/global.css`. `--accent` is the single accent colour (Android green), with a separate value for dark mode.
+- **Hero numbers and code card:** `metrics` and `codeCard` in `profile.ts`. The code card shows on wide screens only.
 
 ## Project structure
 
@@ -69,4 +72,4 @@ If you ever serve the site from a different repository name, set `base: '/<repo-
 - Mobile-first layout, keyboard navigable, with a skip link, visible focus styles and reduced-motion support
 - Colour contrast meets WCAG AA in both themes
 - Meta description, canonical URL, Open Graph and Twitter cards, JSON-LD `Person` data, `sitemap-index.xml` and `robots.txt`
-- No tracking or analytics, and no web fonts (uses the system font stack)
+- No tracking or analytics. Inter is self-hosted through `@fontsource-variable/inter`, so no third-party font requests
