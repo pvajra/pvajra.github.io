@@ -1,0 +1,178 @@
+---
+import { featured } from '../data/profile';
+---
+<section id="research" class="section section--alt" aria-labelledby="research-title">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Featured project · {featured.label}</span>
+      <h2 id="research-title" class="section-title">{featured.title}</h2>
+      <p class="lead">{featured.fullTitle}</p>
+    </div>
+
+    <ul class="stats" aria-label="Headline results">
+      {featured.stats.map((s) => (
+        <li class="card stat">
+          <p class="stat-value">{s.value}</p>
+          <p class="stat-label">{s.label}</p>
+          <p class="stat-detail">{s.detail}</p>
+        </li>
+      ))}
+    </ul>
+
+    <div class="cols">
+      <div class="block">
+        <h3>The problem</h3>
+        <p class="muted">{featured.problem}</p>
+      </div>
+      <div class="block">
+        <h3>Setup</h3>
+        <dl class="setup">
+          {featured.setup.map((s) => (
+            <div>
+              <dt>{s.label}</dt>
+              <dd>{s.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Three deployment architectures</h3>
+      <ul class="archs">
+        {featured.architectures.map((a) => (
+          <li class="card arch">
+            <span class="arch-id">{a.id}</span>
+            <h4>{a.name}</h4>
+            <p class="muted">{a.how}</p>
+            <p class="recovery"><span>Recovery:</span> {a.recovery}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>What I found</h3>
+      <ul class="bullets muted">
+        {featured.findings.map((f) => <li>{f}</li>)}
+      </ul>
+    </div>
+
+    <ul class="chips chips--small" aria-label="Technologies">
+      {featured.tech.map((t) => <li class="chip">{t}</li>)}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .stats {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+  @media (min-width: 860px) {
+    .stats {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  .stat {
+    padding: 1.1rem 1.1rem 1.2rem;
+  }
+  .stat-value {
+    font-size: clamp(1.7rem, 1.3rem + 1.6vw, 2.3rem);
+    font-weight: 750;
+    line-height: 1.1;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-label {
+    font-weight: 600;
+    margin-top: 0.2rem;
+  }
+  .stat-detail {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 0.35rem;
+  }
+  .cols {
+    display: grid;
+    gap: 0 2.5rem;
+  }
+  @media (min-width: 860px) {
+    .cols {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .block {
+    margin-bottom: 2.25rem;
+  }
+  h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+  .muted {
+    color: var(--muted);
+  }
+  .setup {
+    margin: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .setup div {
+    display: grid;
+    gap: 0.1rem;
+  }
+  @media (min-width: 480px) {
+    .setup div {
+      grid-template-columns: 6.5rem 1fr;
+      gap: 1rem;
+    }
+  }
+  dt {
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+  dd {
+    margin: 0;
+    color: var(--muted);
+  }
+  .archs {
+    list-style: none;
+    display: grid;
+    gap: 0.75rem;
+  }
+  @media (min-width: 860px) {
+    .archs {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .arch {
+    display: grid;
+    align-content: start;
+    gap: 0.5rem;
+    padding: 1.2rem;
+  }
+  .arch-id {
+    justify-self: start;
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: 6px;
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  h4 {
+    margin: 0;
+    font-size: 1rem;
+  }
+  .recovery {
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+  }
+  .recovery span {
+    font-weight: 600;
+  }
+</style>

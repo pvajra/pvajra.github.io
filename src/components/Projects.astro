@@ -1,0 +1,99 @@
+---
+import { projects } from '../data/profile';
+import Icon from './Icon.astro';
+---
+<section id="projects" class="section" aria-labelledby="projects-title">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Projects</span>
+      <h2 id="projects-title" class="section-title">More projects</h2>
+    </div>
+    <ul class="grid">
+      {projects.map((p) => (
+        <li class="card project">
+          <p class="context">{p.context}</p>
+          <h3>{p.title}</h3>
+          {p.stat && (
+            <p class="stat"><strong>{p.stat.value}</strong> {p.stat.label}</p>
+          )}
+          <p class="desc">{p.description}</p>
+          {p.points && (
+            <ul class="bullets points">
+              {p.points.map((pt) => <li>{pt}</li>)}
+            </ul>
+          )}
+          <ul class="chips chips--small" aria-label="Technologies">
+            {p.tech.map((t) => <li class="chip">{t}</li>)}
+          </ul>
+          {p.link && (
+            <a class="link" href={p.link.href} rel="noopener noreferrer" target="_blank">
+              <Icon name="github" /> {p.link.label}
+              <span class="visually-hidden">: {p.title} (opens in a new tab)</span>
+            </a>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .grid {
+    list-style: none;
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 760px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .project {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1.4rem;
+  }
+  .context {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  h3 {
+    font-size: 1.15rem;
+    margin-top: -0.35rem;
+  }
+  .stat {
+    padding: 0.6rem 0.8rem;
+    border-radius: 8px;
+    background: var(--accent-soft);
+    font-size: 0.95rem;
+  }
+  .stat strong {
+    color: var(--accent);
+    font-size: 1.15rem;
+  }
+  .desc,
+  .points {
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .chips {
+    margin-top: auto;
+    padding-top: 0.3rem;
+  }
+  .link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    align-self: flex-start;
+    font-weight: 600;
+    min-height: 2.75rem;
+  }
+  .link :global(svg) {
+    width: 1.1em;
+    height: 1.1em;
+  }
+</style>
