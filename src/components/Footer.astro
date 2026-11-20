@@ -2,7 +2,7 @@
 import { person } from '../data/profile';
 const year = new Date().getFullYear();
 ---
-<footer class="wrap">
+<footer>
   <p>© {year} {person.fullName}. Built with Astro and hosted on GitHub Pages.</p>
 </footer>
 
@@ -10,7 +10,7 @@ const year = new Date().getFullYear();
   footer {
     padding-top: 2rem;
     padding-bottom: 3rem;
-    background: linear-gradient(var(--rule), var(--rule)) no-repeat top / calc(100% - 2.5rem) 1px;
+    border-top: 1px solid var(--rule);
     font-size: 0.88rem;
     color: var(--muted);
   }

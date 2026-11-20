@@ -2,52 +2,68 @@
 import { experience } from '../data/profile';
 ---
 <section id="experience" aria-labelledby="experience-title">
-  <div class="wrap">
-    <h2 id="experience-title">Experience</h2>
-    <ol class="timeline">
-      {experience.map((role) => (
-        <li class="role">
-          <p class="when"><time>{role.start}</time> – <time>{role.end}</time></p>
-          <div>
-            <h3>{role.title}</h3>
-            <p class="where">{role.company}, {role.location}</p>
-            <p>{role.summary}</p>
-            <ul>
-              {role.bullets.map((b) => <li>{b}</li>)}
+  <h2 id="experience-title">Experience</h2>
+  <ol class="roles">
+    {experience.map((role) => (
+      <li class="role">
+        <p class="when"><time>{role.start}</time> – <time>{role.end}</time></p>
+        <div class="what">
+          <h3>{role.title}</h3>
+          <p class="where">{role.company} · {role.location}</p>
+          <p>{role.summary}</p>
+          <ul>
+            {role.bullets.map((b) => <li>{b}</li>)}
+          </ul>
+          {role.tech && (
+            <ul class="chips" aria-label="Technologies">
+              {role.tech.map((t) => <li>{t}</li>)}
             </ul>
-            {role.tech && <p class="small muted">{role.tech.join(', ')}</p>}
-          </div>
-        </li>
-      ))}
-    </ol>
-  </div>
+          )}
+        </div>
+      </li>
+    ))}
+  </ol>
 </section>
 
 <style>
-  .timeline {
+  .roles {
     list-style: none;
-    margin: 0;
     padding: 0;
+    margin: 0;
   }
   .role {
-    margin: 0 0 2.25rem;
-    padding-left: 1.1rem;
-    border-left: 2px solid var(--rule);
+    display: grid;
+    gap: 0.25rem 1.5rem;
+    margin: 0 0 1rem;
+    padding: 1.25rem 0;
+    border-radius: 8px;
+    transition: background-color 0.2s;
   }
-  .role:first-child {
-    border-left-color: var(--accent);
-  }
-  .role ul {
-    list-style: disc;
+  @media (min-width: 700px) {
+    .role {
+      grid-template-columns: 9.75rem 1fr;
+      padding: 1.25rem;
+      margin-inline: -1.25rem;
+    }
+    .role:hover {
+      background: var(--tint);
+    }
   }
   .when {
-    font-size: 0.88rem;
+    margin: 0.15rem 0 0;
+    font-size: 0.85rem;
     color: var(--muted);
-    margin-bottom: 0.2rem;
     font-variant-numeric: tabular-nums;
   }
   .where {
     color: var(--muted);
     margin-bottom: 0.75rem;
+  }
+  .what ul:not(.chips) {
+    list-style: disc;
+    margin-bottom: 0.9rem;
+  }
+  .what ul:not(.chips) li {
+    font-size: 0.97rem;
   }
 </style>
