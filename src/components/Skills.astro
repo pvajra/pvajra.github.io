@@ -2,41 +2,32 @@
 import { skills } from '../data/profile';
 ---
 <section id="skills" aria-labelledby="skills-title">
-  <div class="wrap">
-    <h2 id="skills-title">Skills</h2>
-    <dl>
-      {skills.map((g) => (
-        <div class="row">
-          <dt>{g.group}</dt>
-          <dd>{g.items.join(', ')}</dd>
-        </div>
-      ))}
-    </dl>
+  <h2 id="skills-title">Skills</h2>
+  <div class="groups">
+    {skills.map((g) => (
+      <div class="group">
+        <h3>{g.group}</h3>
+        <ul class="chips">
+          {g.items.map((s) => <li>{s}</li>)}
+        </ul>
+      </div>
+    ))}
   </div>
 </section>
 
 <style>
-  dl {
-    margin: 0;
-  }
-  .row {
+  .groups {
     display: grid;
-    gap: 0.1rem 1.5rem;
-    padding: 0.6rem 0;
-    border-bottom: 1px solid var(--rule);
+    gap: 1.5rem 2rem;
+    margin-bottom: 1rem;
   }
-  .row:last-child {
-    border-bottom: 0;
-  }
-  @media (min-width: 600px) {
-    .row {
-      grid-template-columns: 11rem 1fr;
+  @media (min-width: 760px) {
+    .groups {
+      grid-template-columns: 1fr 1fr;
     }
   }
-  dt {
-    font-weight: 600;
-  }
-  dd {
-    margin: 0;
+  h3 {
+    font-size: 0.92rem;
+    margin-bottom: 0.6rem;
   }
 </style>

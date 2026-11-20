@@ -2,37 +2,39 @@
 import { featured } from '../data/profile';
 ---
 <section id="research" aria-labelledby="research-title">
-  <div class="wrap">
-    <h2 id="research-title">Featured project: {featured.title}</h2>
-    <p class="muted">{featured.label}. {featured.fullTitle}.</p>
+  <h2 id="research-title">Featured project</h2>
+  <div class="panel">
+    <p class="label">{featured.label}</p>
+    <h3 class="title">{featured.title}</h3>
+    <p class="muted">{featured.fullTitle}</p>
 
     <dl class="numbers">
       {featured.stats.map((s) => (
         <div>
           <dt>{s.value}</dt>
-          <dd><span class="label">{s.label}</span> <span class="muted small">{s.detail}</span></dd>
+          <dd><span class="what">{s.label}</span> <span class="detail">{s.detail}</span></dd>
         </div>
       ))}
     </dl>
 
-    <h3>The problem</h3>
+    <h4>The problem</h4>
     <p>{featured.problem}</p>
 
-    <h3>Setup</h3>
+    <h4>Setup</h4>
     <ul>
       {featured.setup.map((s) => <li><strong>{s.label}:</strong> {s.value}</li>)}
     </ul>
 
-    <h3>Three deployment architectures</h3>
+    <h4>Three deployment architectures</h4>
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th scope="col"></th><th scope="col">How it runs</th><th scope="col">Recovery</th></tr>
+          <tr><th scope="col">Config</th><th scope="col">How it runs</th><th scope="col">Recovery</th></tr>
         </thead>
         <tbody>
           {featured.architectures.map((a) => (
             <tr>
-              <th scope="row">{a.id}</th>
+              <th scope="row"><span class="tag">{a.id}</span></th>
               <td><strong>{a.name}.</strong> {a.how}</td>
               <td>{a.recovery}</td>
             </tr>
@@ -41,53 +43,91 @@ import { featured } from '../data/profile';
       </table>
     </div>
 
-    <h3>What I found</h3>
+    <h4>What I found</h4>
     <ul>
       {featured.findings.map((f) => <li>{f}</li>)}
     </ul>
-    <p class="small muted">{featured.tech.join(', ')}</p>
+
+    <ul class="chips" aria-label="Technologies">
+      {featured.tech.map((t) => <li>{t}</li>)}
+    </ul>
   </div>
 </section>
 
 <style>
-  h3 {
-    margin: 1.75rem 0 0.6rem;
+  .panel {
+    padding: 1.5rem 1.25rem;
+    border-radius: 12px;
+    background: var(--tint);
+    border: 1px solid var(--rule);
+  }
+  @media (min-width: 640px) {
+    .panel {
+      padding: 2rem;
+    }
+  }
+  .label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+  .title {
+    font-size: 1.3rem;
+    margin-bottom: 0.4rem;
+  }
+  h4 {
+    font-size: 0.98rem;
+    margin: 1.75rem 0 0.5rem;
   }
   .numbers {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.25rem 1.5rem;
-    margin: 2rem 0 1rem;
-    padding: 1.25rem 0;
-    border-top: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr));
+    gap: 0.75rem;
+    margin: 1.75rem 0 0.5rem;
   }
-  @media (min-width: 640px) {
-    .numbers {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
+  .numbers div {
+    padding: 1rem;
+    border-radius: 8px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
   }
   dt {
-    font-size: 1.75rem;
-    font-weight: 650;
+    font-size: 1.7rem;
+    font-weight: 700;
     letter-spacing: -0.03em;
     line-height: 1.1;
+    color: var(--accent);
     font-variant-numeric: tabular-nums;
   }
   dd {
-    margin: 0.25rem 0 0;
+    margin: 0.3rem 0 0;
     line-height: 1.4;
   }
-  .label {
+  .what {
     display: block;
-    font-weight: 550;
+    font-weight: 600;
+    font-size: 0.92rem;
   }
-  .small {
+  .detail {
     display: block;
     margin-top: 0.15rem;
+    font-size: 0.82rem;
+    color: var(--muted);
   }
-  th[scope='row'] {
-    white-space: nowrap;
-    padding-right: 1rem;
+  .tag {
+    display: inline-block;
+    padding: 0 0.45rem;
+    border-radius: 4px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 0.85rem;
+  }
+  .chips {
+    margin-top: 1.25rem;
+  }
+  .chips :global(li) {
+    background: var(--surface);
+    border: 1px solid var(--rule);
   }
 </style>

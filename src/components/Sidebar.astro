@@ -1,0 +1,201 @@
+---
+import { nav, person, site } from '../data/profile';
+---
+<header id="top" class="sidebar">
+  <div class="inner">
+    <h1>{person.name}</h1>
+    <p class="headline">{person.headline}</p>
+    <p class="intro">{person.tagline}</p>
+
+    <nav aria-label="Sections" class="nav">
+      <ul>
+        {nav.map((item) => <li><a href={item.href} data-nav>{item.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div class="actions">
+      <a class="cv" href={site.cvFile} download>Download CV <span class="visually-hidden">(PDF)</span></a>
+      <p class="links">
+        <a href={person.linkedin} rel="noopener noreferrer">LinkedIn</a>
+        <a href={person.github} rel="noopener noreferrer">GitHub</a>
+        <a href={`mailto:${person.email}`}>Email</a>
+      </p>
+    </div>
+
+    <p class="meta">
+      {person.location}<br />
+      <button class="theme" type="button" aria-pressed="false">Dark mode</button>
+    </p>
+  </div>
+</header>
+
+<style>
+  .sidebar {
+    padding: 3rem 0 2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  @media (min-width: 1000px) {
+    .sidebar {
+      border-bottom: 0;
+      padding: 0;
+    }
+    .inner {
+      position: sticky;
+      top: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 4.5rem 0 3rem;
+    }
+  }
+  h1 {
+    font-size: clamp(2rem, 1.7rem + 1.4vw, 2.5rem);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+  .headline {
+    margin: 0.75rem 0 0;
+    font-weight: 550;
+  }
+  .intro {
+    margin-top: 1rem;
+    color: var(--muted);
+  }
+
+  .nav {
+    margin-top: 1.5rem;
+  }
+  @media (min-width: 1000px) {
+    .nav {
+      margin-top: 2rem;
+    }
+  }
+  @media (max-width: 999px) {
+    .nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 1rem;
+    }
+    .nav a::before {
+      display: none;
+    }
+  }
+  .nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .nav li {
+    margin: 0;
+  }
+  .nav a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.3rem 0;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.92rem;
+  }
+  .nav a::before {
+    content: '';
+    width: 1.25rem;
+    height: 1px;
+    background: currentColor;
+    transition: width 0.2s;
+  }
+  .nav a:hover,
+  .nav a[aria-current='true'] {
+    color: var(--text);
+  }
+  .nav a:hover::before,
+  .nav a[aria-current='true']::before {
+    width: 2.5rem;
+    background: var(--accent);
+  }
+
+  .actions {
+    margin-top: 1.75rem;
+  }
+  .cv {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    background: var(--accent);
+    color: var(--bg);
+    font-weight: 600;
+    font-size: 0.94rem;
+    text-decoration: none;
+  }
+  .cv:hover {
+    background: var(--accent-hover);
+    color: var(--bg);
+  }
+  .links {
+    display: flex;
+    gap: 1.25rem;
+    margin: 1rem 0 0;
+    font-size: 0.95rem;
+  }
+  .meta {
+    margin: 1.75rem 0 0;
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+  @media (min-width: 1000px) {
+    .meta {
+      margin-top: auto;
+      padding-top: 2rem;
+    }
+  }
+  .theme {
+    font: inherit;
+    color: var(--muted);
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: underline dotted;
+    text-underline-offset: 0.2em;
+  }
+  .theme:hover {
+    color: var(--text);
+  }
+</style>
+
+<script>
+  // Theme toggle
+  const btn = document.querySelector<HTMLButtonElement>('.theme');
+  const root = document.documentElement;
+  const sync = () => {
+    const dark = root.dataset.theme === 'dark';
+    if (!btn) return;
+    btn.textContent = dark ? 'Light mode' : 'Dark mode';
+    btn.setAttribute('aria-pressed', String(dark));
+  };
+  sync();
+  btn?.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch {}
+    sync();
+  });
+
+  // Highlight the section currently in view
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-nav]'));
+  const byId = new Map(links.map((a) => [a.hash.slice(1), a]));
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        links.forEach((a) => a.removeAttribute('aria-current'));
+        byId.get(e.target.id)?.setAttribute('aria-current', 'true');
+      }
+    },
+    { rootMargin: '-30% 0px -60% 0px' }
+  );
+  byId.forEach((_, id) => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+</script>

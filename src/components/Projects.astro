@@ -2,33 +2,88 @@
 import { projects } from '../data/profile';
 ---
 <section id="projects" aria-labelledby="projects-title">
-  <div class="wrap">
-    <h2 id="projects-title">More projects</h2>
+  <h2 id="projects-title">More projects</h2>
+  <div class="grid">
     {projects.map((p) => (
       <article class="project">
+        <p class="context">{p.context}</p>
         <h3>{p.title}</h3>
-        <p class="muted small context">{p.context}</p>
-        {p.stat && <p><strong>{p.stat.value} {p.stat.label}.</strong></p>}
-        <p>{p.description}</p>
+        {p.stat && <p class="stat"><strong>{p.stat.value}</strong> {p.stat.label}</p>}
+        <p class="desc">{p.description}</p>
         {p.points && (
           <ul>
             {p.points.map((pt) => <li>{pt}</li>)}
           </ul>
         )}
-        <p class="small muted">
-          {p.tech.join(', ')}
-          {p.link && <> · <a href={p.link.href} rel="noopener noreferrer">{p.link.label}<span class="visually-hidden">: {p.title}</span></a></>}
-        </p>
+        <div class="foot">
+          <ul class="chips" aria-label="Technologies">
+            {p.tech.map((t) => <li>{t}</li>)}
+          </ul>
+          {p.link && (
+            <a class="link" href={p.link.href} rel="noopener noreferrer">
+              {p.link.label} <span aria-hidden="true">↗</span>
+              <span class="visually-hidden">: {p.title}</span>
+            </a>
+          )}
+        </div>
       </article>
     ))}
   </div>
 </section>
 
 <style>
+  .grid {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  @media (min-width: 760px) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
   .project {
-    margin-bottom: 2.25rem;
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    background: var(--surface);
+    transition: border-color 0.2s;
+  }
+  .project:hover {
+    border-color: var(--rule-strong);
   }
   .context {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 0.25rem;
+  }
+  h3 {
     margin-bottom: 0.6rem;
+  }
+  .stat {
+    font-size: 0.94rem;
+    margin-bottom: 0.6rem;
+  }
+  .stat strong {
+    color: var(--accent);
+    font-size: 1.15rem;
+  }
+  .desc,
+  ul:not(.chips) {
+    font-size: 0.94rem;
+    color: var(--muted);
+  }
+  .foot {
+    margin-top: auto;
+    padding-top: 0.75rem;
+    display: grid;
+    gap: 0.75rem;
+  }
+  .link {
+    font-weight: 600;
+    font-size: 0.92rem;
+    justify-self: start;
   }
 </style>
